@@ -3,11 +3,15 @@
 import time
 import subprocess
 
+# Screen orientations list
 ORIENTATIONS = ['normal','inverted','left','right']
 PREV_STATE = -1
 
+# This variable can be changed to do an adjustment on accelerometer sensitivity
 BUFFER = 10
 
+# Change this dict information to match your computer devices names
+# use 'xrandr' to see screen name and 'xinput list' to see the others
 DEVICE_INFO = {
     "screen": "eDP1",
     "touchscreen": "Raydium Corporation Raydium Touch System",
@@ -15,11 +19,10 @@ DEVICE_INFO = {
     "keyboard": "AT Translated Set 2 keyboard"
 }
 
+# This parameter define if touchpad and keyboard should be disabled on orientations other than 'normal'
 DISABLE_KB = True
 
-ORIENTATION_CMD = 'xrandr'
-ORIENTATION_RE = ''
-
+# This dict is the transformation matrix that change your touchscreen orientation
 TRANSFORMATION_MATRIX = {
     "normal": "1 0 0 0 1 0 0 0 1",
     "left": "0 -1 1 1 0 0 0 0 1",
@@ -27,6 +30,7 @@ TRANSFORMATION_MATRIX = {
     "inverted": "-1 0 1 0 -1 1 0 0 1"
 }
 
+# Do the screen orientation changes
 def doRotate(orientation):
     rotateScreenCmd = "xrandr --output {} --rotate {}".format(
         DEVICE_INFO['screen'],
@@ -46,6 +50,7 @@ def doRotate(orientation):
 
     res = subprocess.call("{}; {}; {}".format(rotateScreenCmd,rotateTouchCmd,toggleKbCmd), shell=True)
 
+# Keep looking for changes on sensors
 while True:
     angleX = int(subprocess.check_output(
         "cat /sys/bus/iio/devices/iio:device*/in_incli_x_raw", shell=True))
