@@ -17,7 +17,7 @@
 ##### Rotacionar Tela
 > Scripts para fazer rotação de tela de notebook com acelerometro e tela touch.
 
-> O script em python faz a checagem da orientação da tela e chama o grox.rb para fazer as alterações na matriz de posicionamento da tela do computador.
+> Para utilizar é necessário editar o arquivo python e colocar as informações dos dispositivos do seu computador.
 
 - - - -
 
